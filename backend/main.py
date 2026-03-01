@@ -1,3 +1,5 @@
+import time as _time
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
@@ -6,10 +8,11 @@ from loguru import logger
 from app.core.config import get_settings
 from app.core.database import Database
 from app.core.logging import setup_logging
+from app.core.middleware import RequestTimingMiddleware, RateLimitMiddleware
 from app.services.analytics_engine import AnalyticsEngine
 
 # Import API routers
-from app.api import news, analytics, companies, alerts
+from app.api import news, analytics, companies, alerts, export
 from app.api import analytics as analytics_api
 from app.api import companies as companies_api
 from app.api import alerts as alerts_api
@@ -18,6 +21,9 @@ settings = get_settings()
 
 # Global analytics engine
 analytics_engine = None
+
+# Track server start time for uptime calculation
+_server_start_time = _time.time()
 
 
 @asynccontextmanager
@@ -41,6 +47,9 @@ async def lifespan(app: FastAPI):
     companies_api.set_analytics_engine(analytics_engine)
     alerts_api.set_analytics_engine(analytics_engine)
     
+    # Set analytics engine for export module
+    export.set_analytics_engine(analytics_engine)
+    
     logger.info("API ready")
     
     yield
@@ -54,7 +63,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Banking News and Deal Intelligence Engine",
     description="NLP-powered financial news analysis and deal intelligence platform",
-    version="1.0.0",
+    version="2.0.0",
     lifespan=lifespan
 )
 
@@ -67,11 +76,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Add custom middleware
+app.add_middleware(RequestTimingMiddleware)
+app.add_middleware(RateLimitMiddleware, max_requests=settings.api_rate_limit, window_seconds=60)
+
 # Include API routers
 app.include_router(news.router)
 app.include_router(analytics.router)
 app.include_router(companies.router)
 app.include_router(alerts.router)
+app.include_router(export.router)
 
 
 @app.get("/")
@@ -79,22 +93,54 @@ async def root():
     """Root endpoint."""
     return {
         "message": "Banking News and Deal Intelligence Engine API",
-        "version": "1.0.0",
+        "version": "2.0.0",
         "status": "running",
         "docs": "/docs",
         "endpoints": {
             "news": "/api/v1/news",
             "analytics": "/api/v1/analytics",
             "companies": "/api/v1/companies",
-            "alerts": "/api/v1/alerts"
+            "alerts": "/api/v1/alerts",
+            "export": "/api/v1/export"
         }
     }
 
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint."""
-    return {"status": "healthy"}
+    """
+    Enhanced health check with system diagnostics.
+    
+    Returns database connectivity, uptime, memory usage, and version info.
+    """
+    import psutil
+    import os
+    from datetime import datetime, timezone
+
+    # Check database connectivity
+    db_status = "disconnected"
+    try:
+        if Database.client:
+            await Database.client.admin.command("ping")
+            db_status = "connected"
+    except Exception:
+        db_status = "disconnected"
+
+    process = psutil.Process(os.getpid())
+    memory_mb = process.memory_info().rss / (1024 * 1024)
+    uptime = _time.time() - _server_start_time
+
+    overall = "healthy" if db_status == "connected" else "degraded"
+
+    return {
+        "status": overall,
+        "version": "2.0.0",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "uptime_seconds": round(uptime, 1),
+        "database": db_status,
+        "memory_usage_mb": round(memory_mb, 1),
+        "environment": settings.environment,
+    }
 
 
 if __name__ == "__main__":
