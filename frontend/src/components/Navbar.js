@@ -7,6 +7,7 @@ import {
     Button,
     Box,
     IconButton,
+    Tooltip,
 } from '@mui/material';
 import {
     Dashboard as DashboardIcon,
@@ -14,7 +15,10 @@ import {
     Business,
     NotificationsActive,
     ShowChart,
+    DarkMode,
+    LightMode,
 } from '@mui/icons-material';
+import { useThemeMode } from '../context/ThemeContext';
 
 const navItems = [
     { label: 'Dashboard', path: '/', icon: <DashboardIcon /> },
@@ -25,15 +29,13 @@ const navItems = [
 
 const Navbar = () => {
     const location = useLocation();
+    const { isDarkMode, toggleTheme } = useThemeMode();
 
     return (
         <AppBar
             position="sticky"
             elevation={0}
-            sx={{
-                background: 'linear-gradient(135deg, #1a237e 0%, #0d47a1 100%)',
-                borderBottom: '2px solid rgba(255,255,255,0.12)',
-            }}
+            sx={{ borderBottom: '2px solid rgba(255,255,255,0.12)' }}
         >
             <Toolbar>
                 <IconButton edge="start" color="inherit" sx={{ mr: 1 }}>
@@ -81,6 +83,13 @@ const Navbar = () => {
                         </Button>
                     ))}
                 </Box>
+
+                {/* Dark / Light Mode Toggle */}
+                <Tooltip title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}>
+                    <IconButton color="inherit" onClick={toggleTheme}>
+                        {isDarkMode ? <LightMode /> : <DarkMode />}
+                    </IconButton>
+                </Tooltip>
             </Toolbar>
         </AppBar>
     );
