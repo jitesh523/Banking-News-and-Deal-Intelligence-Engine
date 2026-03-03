@@ -17,10 +17,12 @@ from app.api import websocket as ws_api
 from app.api import bookmarks as bookmarks_api
 from app.api import collection as collection_api
 from app.api import summary as summary_api
+from app.api import analyze as analyze_api
 from app.api import analytics as analytics_api
 from app.api import companies as companies_api
 from app.api import alerts as alerts_api
 from app.services.market_summary import MarketSummaryService
+from app.services.nlp_pipeline import NLPPipeline
 
 settings = get_settings()
 
@@ -59,6 +61,11 @@ async def lifespan(app: FastAPI):
     summary_service = MarketSummaryService(analytics_engine)
     summary_api.set_summary_service(summary_service)
     
+    # Initialize NLP pipeline for text analysis
+    logger.info("Initializing NLP Pipeline for analysis endpoint...")
+    nlp_pipeline = NLPPipeline()
+    analyze_api.set_nlp_pipeline(nlp_pipeline)
+    
     logger.info("API ready")
     
     yield
@@ -72,7 +79,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Banking News and Deal Intelligence Engine",
     description="NLP-powered financial news analysis and deal intelligence platform",
-    version="2.1.0",
+    version="2.2.0",
     lifespan=lifespan
 )
 
@@ -99,6 +106,7 @@ app.include_router(ws_api.router)
 app.include_router(bookmarks_api.router)
 app.include_router(collection_api.router)
 app.include_router(summary_api.router)
+app.include_router(analyze_api.router)
 
 
 @app.get("/")
@@ -106,7 +114,7 @@ async def root():
     """Root endpoint."""
     return {
         "message": "Banking News and Deal Intelligence Engine API",
-        "version": "2.1.0",
+        "version": "2.2.0",
         "status": "running",
         "docs": "/docs",
         "endpoints": {
@@ -118,6 +126,7 @@ async def root():
             "bookmarks": "/api/v1/bookmarks",
             "collection": "/api/v1/collection",
             "summary": "/api/v1/summary",
+            "analyze": "/api/v1/analyze",
             "websocket": "/ws/live-feed"
         }
     }
@@ -151,7 +160,7 @@ async def health_check():
 
     return {
         "status": overall,
-        "version": "2.1.0",
+        "version": "2.2.0",
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "uptime_seconds": round(uptime, 1),
         "database": db_status,

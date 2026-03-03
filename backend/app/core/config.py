@@ -20,6 +20,7 @@ class Settings(BaseSettings):
     api_port: int = 8000
     secret_key: str = "your-secret-key-change-this"
     api_rate_limit: int = 100
+    api_keys: str = ""  # comma-separated valid API keys; empty = auth disabled
     
     # Frontend
     frontend_url: str = "http://localhost:3000"

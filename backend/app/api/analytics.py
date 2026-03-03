@@ -3,6 +3,8 @@ from typing import Optional
 from datetime import datetime, timedelta
 from loguru import logger
 
+from app.core.cache import cache
+
 router = APIRouter(prefix="/api/v1/analytics", tags=["analytics"])
 
 # This will be initialized in main.py
@@ -133,12 +135,15 @@ async def get_deal_stats(
         if not analytics_engine:
             raise HTTPException(status_code=503, detail="Analytics engine not initialized")
         
+        cache_key = f"deal_stats:{days}"
+        cached = cache.get(cache_key)
+        if cached is not None:
+            return cached
+
         insights = analytics_engine.get_deal_insights(days_back=days)
-        
-        return {
-            "period_days": days,
-            "insights": insights
-        }
+        result = {"period_days": days, "insights": insights}
+        cache.set(cache_key, result, ttl=180)
+        return result
         
     except HTTPException:
         raise
@@ -149,13 +154,17 @@ async def get_deal_stats(
 
 @router.get("/dashboard", summary="Get dashboard summary")
 async def get_dashboard_summary():
-    """Get comprehensive dashboard summary."""
+    """Get comprehensive dashboard summary (cached for 2 minutes)."""
     try:
         if not analytics_engine:
             raise HTTPException(status_code=503, detail="Analytics engine not initialized")
         
+        cached = cache.get("dashboard_summary")
+        if cached is not None:
+            return cached
+
         summary = analytics_engine.get_dashboard_summary()
-        
+        cache.set("dashboard_summary", summary, ttl=120)
         return summary
         
     except HTTPException:
@@ -163,3 +172,4 @@ async def get_dashboard_summary():
     except Exception as e:
         logger.error(f"Error getting dashboard summary: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
