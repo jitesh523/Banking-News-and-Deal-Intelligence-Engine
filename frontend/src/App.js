@@ -8,6 +8,7 @@ import NewsPage from './components/NewsPage';
 import CompaniesPage from './components/CompaniesPage';
 import AlertsPage from './components/AlertsPage';
 import SearchPage from './components/SearchPage';
+import BookmarksPage from './components/BookmarksPage';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/companies" element={<CompaniesPage />} />
           <Route path="/alerts" element={<AlertsPage />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/bookmarks" element={<BookmarksPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

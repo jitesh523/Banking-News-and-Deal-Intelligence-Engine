@@ -18,6 +18,7 @@ import {
     DarkMode,
     LightMode,
     Search,
+    Bookmark,
 } from '@mui/icons-material';
 import { useThemeMode } from '../context/ThemeContext';
 
@@ -27,6 +28,7 @@ const navItems = [
     { label: 'Companies', path: '/companies', icon: <Business /> },
     { label: 'Alerts', path: '/alerts', icon: <NotificationsActive /> },
     { label: 'Search', path: '/search', icon: <Search /> },
+    { label: 'Bookmarks', path: '/bookmarks', icon: <Bookmark /> },
 ];
 
 const Navbar = () => {
