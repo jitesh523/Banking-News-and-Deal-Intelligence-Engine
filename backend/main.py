@@ -18,11 +18,14 @@ from app.api import bookmarks as bookmarks_api
 from app.api import collection as collection_api
 from app.api import summary as summary_api
 from app.api import analyze as analyze_api
+from app.api import tags as tags_api
+from app.api import compare as compare_api
 from app.api import analytics as analytics_api
 from app.api import companies as companies_api
 from app.api import alerts as alerts_api
 from app.services.market_summary import MarketSummaryService
 from app.services.nlp_pipeline import NLPPipeline
+from app.core.error_handler import register_error_handlers
 
 settings = get_settings()
 
@@ -66,6 +69,9 @@ async def lifespan(app: FastAPI):
     nlp_pipeline = NLPPipeline()
     analyze_api.set_nlp_pipeline(nlp_pipeline)
     
+    # Set analytics engine for compare module
+    compare_api.set_analytics_engine(analytics_engine)
+    
     logger.info("API ready")
     
     yield
@@ -79,7 +85,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Banking News and Deal Intelligence Engine",
     description="NLP-powered financial news analysis and deal intelligence platform",
-    version="2.2.0",
+    version="2.3.0",
     lifespan=lifespan
 )
 
@@ -107,6 +113,11 @@ app.include_router(bookmarks_api.router)
 app.include_router(collection_api.router)
 app.include_router(summary_api.router)
 app.include_router(analyze_api.router)
+app.include_router(tags_api.router)
+app.include_router(compare_api.router)
+
+# Register global error handler
+register_error_handlers(app)
 
 
 @app.get("/")
@@ -114,7 +125,7 @@ async def root():
     """Root endpoint."""
     return {
         "message": "Banking News and Deal Intelligence Engine API",
-        "version": "2.2.0",
+        "version": "2.3.0",
         "status": "running",
         "docs": "/docs",
         "endpoints": {
@@ -127,6 +138,8 @@ async def root():
             "collection": "/api/v1/collection",
             "summary": "/api/v1/summary",
             "analyze": "/api/v1/analyze",
+            "tags": "/api/v1/tags",
+            "compare": "/api/v1/compare",
             "websocket": "/ws/live-feed"
         }
     }
@@ -160,7 +173,7 @@ async def health_check():
 
     return {
         "status": overall,
-        "version": "2.2.0",
+        "version": "2.3.0",
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "uptime_seconds": round(uptime, 1),
         "database": db_status,
