@@ -17,6 +17,7 @@ import {
     ShowChart,
     DarkMode,
     LightMode,
+    Search,
 } from '@mui/icons-material';
 import { useThemeMode } from '../context/ThemeContext';
 
@@ -25,6 +26,7 @@ const navItems = [
     { label: 'News', path: '/news', icon: <Article /> },
     { label: 'Companies', path: '/companies', icon: <Business /> },
     { label: 'Alerts', path: '/alerts', icon: <NotificationsActive /> },
+    { label: 'Search', path: '/search', icon: <Search /> },
 ];
 
 const Navbar = () => {

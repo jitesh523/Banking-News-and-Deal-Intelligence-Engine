@@ -97,15 +97,36 @@ This platform delivers all of this in a single, integrated solution.
 - **Event-driven Architecture**: Real-time notifications
 
 ### 🌐 RESTful API
-- **20+ Endpoints**: Comprehensive API coverage
+- **30+ Endpoints**: Comprehensive API coverage across 11 modules
 - **Auto-documentation**: Interactive Swagger UI and ReDoc
 - **Async Operations**: High-performance async/await patterns
-- **Pagination & Filtering**: Flexible query parameters
+- **Pagination & Filtering**: Standardized `PaginatedResponse` with page metadata
+- **Rate Limiting**: Per-IP sliding window rate limiter with `X-RateLimit` headers
+- **Request Tracking**: `X-Request-ID` and `X-Process-Time` response headers
+- **API Key Authentication**: Optional `X-API-Key` header protection for sensitive endpoints
+- **In-Memory Caching**: TTL-based cache for expensive analytics queries
 - **CORS Support**: Frontend integration ready
 - **Error Handling**: Standardized HTTP error responses
 
+| Module | Prefix | Description |
+|--------|--------|-------------|
+| News | `/api/v1/news` | Article CRUD, search, trending, statistics |
+| Analytics | `/api/v1/analytics` | Sentiment, topics, entities, deals, dashboard |
+| Companies | `/api/v1/companies` | Company profiles, relationships, network graph |
+| Alerts | `/api/v1/alerts` | Alert feed with priority filtering, summary |
+| Export | `/api/v1/export` | CSV/JSON download for deals, companies, articles |
+| Bookmarks | `/api/v1/bookmarks` | Save/list/remove favourite articles |
+| Collection | `/api/v1/collection` | Trigger data collection, view history, status |
+| Summary | `/api/v1/summary` | Daily & weekly market intelligence digests |
+| Analyze | `/api/v1/analyze` | On-demand NLP analysis of any text snippet |
+| WebSocket | `/ws/live-feed` | Real-time push notifications |
+| Health | `/health` | System diagnostics (DB, uptime, memory) |
+
 ### 📱 Interactive Dashboard
 - **Modern React UI**: Built with Material-UI components
+- **Multi-Page Navigation**: React Router with Navbar (Dashboard, News, Companies, Alerts, Search)
+- **Dark Mode**: Persistent dark/light theme toggle stored in localStorage
+- **Global Search**: Unified search across articles, companies, and deals
 - **Real-time Data**: Live updates from backend API
 - **Interactive Charts**: Recharts-powered visualizations
   - Deal type distribution (Pie chart)
@@ -114,6 +135,13 @@ This platform delivers all of this in a single, integrated solution.
 - **Summary Cards**: Key metrics at a glance
 - **Data Tables**: Sortable, filterable lists
 - **Responsive Design**: Mobile-friendly interface
+
+### 🐳 Docker & DevOps
+- **Docker Compose**: One-command deployment with MongoDB, backend, and frontend
+- **Multi-stage Builds**: Optimized Docker images for production
+- **GitHub Actions CI/CD**: Automated linting (flake8) and build verification
+- **Makefile**: Developer-friendly commands (`make run`, `make test`, `make docker-up`)
+- **Health Checks**: Container-level health monitoring
 
 ---
 

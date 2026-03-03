@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 import NewsPage from './components/NewsPage';
 import CompaniesPage from './components/CompaniesPage';
 import AlertsPage from './components/AlertsPage';
+import SearchPage from './components/SearchPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/news" element={<NewsPage />} />
           <Route path="/companies" element={<CompaniesPage />} />
           <Route path="/alerts" element={<AlertsPage />} />
+          <Route path="/search" element={<SearchPage />} />
         </Routes>
       </Router>
     </ThemeProvider>
