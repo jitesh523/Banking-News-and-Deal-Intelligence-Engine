@@ -74,7 +74,7 @@ const NewsPage = () => {
             {/* Filters */}
             <Paper elevation={2} sx={{ p: 2, mb: 3 }}>
                 <Grid container spacing={2} alignItems="center">
-                    <Grid item xs={12} md={6}>
+                    <Grid size={{ xs: 12, md: 6 }}>
                         <TextField
                             fullWidth
                             placeholder="Search articles..."
@@ -87,7 +87,7 @@ const NewsPage = () => {
                             }}
                         />
                     </Grid>
-                    <Grid item xs={12} md={3}>
+                    <Grid size={{ xs: 12, md: 3 }}>
                         <FormControl fullWidth>
                             <InputLabel>Source</InputLabel>
                             <Select
@@ -102,7 +102,7 @@ const NewsPage = () => {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12} md={3}>
+                    <Grid size={{ xs: 12, md: 3 }}>
                         <Typography variant="body2" color="textSecondary">
                             {articles.length} articles found
                         </Typography>
@@ -118,7 +118,7 @@ const NewsPage = () => {
                 <>
                     <Grid container spacing={2}>
                         {paginatedArticles.map((article, idx) => (
-                            <Grid item xs={12} md={6} lg={4} key={idx}>
+                            <Grid size={{ xs: 12, md: 6, lg: 4 }} key={idx}>
                                 <Card
                                     elevation={2}
                                     sx={{

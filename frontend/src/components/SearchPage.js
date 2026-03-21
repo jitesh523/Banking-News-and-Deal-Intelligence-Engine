@@ -128,14 +128,14 @@ const SearchPage = () => {
                     {tab === 0 && (
                         <Grid container spacing={2}>
                             {results.articles.length === 0 && (
-                                <Grid item xs={12}>
+                                <Grid size={{ xs: 12 }}>
                                     <Typography color="textSecondary" align="center" py={4}>
                                         No articles match your query
                                     </Typography>
                                 </Grid>
                             )}
                             {results.articles.map((article, idx) => (
-                                <Grid item xs={12} md={6} key={idx}>
+                                <Grid size={{ xs: 12, md: 6 }} key={idx}>
                                     <Card
                                         elevation={2}
                                         sx={{
@@ -168,14 +168,14 @@ const SearchPage = () => {
                     {tab === 1 && (
                         <Grid container spacing={2}>
                             {results.companies.length === 0 && (
-                                <Grid item xs={12}>
+                                <Grid size={{ xs: 12 }}>
                                     <Typography color="textSecondary" align="center" py={4}>
                                         No companies match your query
                                     </Typography>
                                 </Grid>
                             )}
                             {results.companies.map((company, idx) => (
-                                <Grid item xs={12} sm={6} md={4} key={idx}>
+                                <Grid size={{ xs: 12, sm: 6, md: 4 }} key={idx}>
                                     <Card elevation={2}>
                                         <CardContent>
                                             <Typography variant="h6" fontWeight="bold">{company.company}</Typography>
@@ -194,14 +194,14 @@ const SearchPage = () => {
                     {tab === 2 && (
                         <Grid container spacing={2}>
                             {results.deals.length === 0 && (
-                                <Grid item xs={12}>
+                                <Grid size={{ xs: 12 }}>
                                     <Typography color="textSecondary" align="center" py={4}>
                                         No deal data available
                                     </Typography>
                                 </Grid>
                             )}
                             {results.deals.map((deal, idx) => (
-                                <Grid item xs={12} sm={6} md={4} key={idx}>
+                                <Grid size={{ xs: 12, sm: 6, md: 4 }} key={idx}>
                                     <Card elevation={2}>
                                         <CardContent>
                                             <Typography variant="h6" fontWeight="bold" textTransform="capitalize">

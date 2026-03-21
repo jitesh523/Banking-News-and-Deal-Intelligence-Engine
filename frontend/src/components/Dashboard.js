@@ -90,7 +90,7 @@ const Dashboard = () => {
 
             {/* Summary Cards */}
             <Grid container spacing={3} sx={{ mb: 4 }}>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                     <Card elevation={3}>
                         <CardContent>
                             <Box display="flex" alignItems="center" justifyContent="space-between">
@@ -108,7 +108,7 @@ const Dashboard = () => {
                     </Card>
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                     <Card elevation={3}>
                         <CardContent>
                             <Box display="flex" alignItems="center" justifyContent="space-between">
@@ -126,7 +126,7 @@ const Dashboard = () => {
                     </Card>
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                     <Card elevation={3}>
                         <CardContent>
                             <Box display="flex" alignItems="center" justifyContent="space-between">
@@ -144,7 +144,7 @@ const Dashboard = () => {
                     </Card>
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                     <Card elevation={3}>
                         <CardContent>
                             <Box display="flex" alignItems="center" justifyContent="space-between">
@@ -166,7 +166,7 @@ const Dashboard = () => {
             {/* Charts Row */}
             <Grid container spacing={3} sx={{ mb: 4 }}>
                 {/* Deal Type Distribution */}
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                     <Paper elevation={3} sx={{ p: 3, height: '400px' }}>
                         <Typography variant="h6" gutterBottom fontWeight="bold">
                             Deal Type Distribution
@@ -200,7 +200,7 @@ const Dashboard = () => {
                 </Grid>
 
                 {/* Sentiment Distribution */}
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                     <Paper elevation={3} sx={{ p: 3, height: '400px' }}>
                         <Typography variant="h6" gutterBottom fontWeight="bold">
                             Sentiment Distribution
@@ -232,7 +232,7 @@ const Dashboard = () => {
             {/* Lists Row */}
             <Grid container spacing={3}>
                 {/* Top Companies */}
-                <Grid item xs={12} md={4}>
+                <Grid size={{ xs: 12, md: 4 }}>
                     <Paper elevation={3} sx={{ p: 3, height: '400px', overflow: 'auto' }}>
                         <Typography variant="h6" gutterBottom fontWeight="bold">
                             Top Companies
@@ -252,7 +252,7 @@ const Dashboard = () => {
                 </Grid>
 
                 {/* Trending News */}
-                <Grid item xs={12} md={4}>
+                <Grid size={{ xs: 12, md: 4 }}>
                     <Paper elevation={3} sx={{ p: 3, height: '400px', overflow: 'auto' }}>
                         <Typography variant="h6" gutterBottom fontWeight="bold">
                             Trending News
@@ -272,7 +272,7 @@ const Dashboard = () => {
                 </Grid>
 
                 {/* Recent Alerts */}
-                <Grid item xs={12} md={4}>
+                <Grid size={{ xs: 12, md: 4 }}>
                     <Paper elevation={3} sx={{ p: 3, height: '400px', overflow: 'auto' }}>
                         <Typography variant="h6" gutterBottom fontWeight="bold">
                             Recent Alerts

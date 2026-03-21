@@ -112,7 +112,7 @@ const BookmarksPage = () => {
             ) : (
                 <Grid container spacing={2}>
                     {bookmarks.map((bm, idx) => (
-                        <Grid item xs={12} sm={6} md={4} key={idx}>
+                        <Grid size={{ xs: 12, sm: 6, md: 4 }} key={idx}>
                             <Card
                                 elevation={2}
                                 sx={{
