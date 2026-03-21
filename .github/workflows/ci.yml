@@ -26,7 +26,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('backend/requirements.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('backend/requirements-ci.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
 
@@ -35,7 +35,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install flake8
-          pip install -r requirements.txt
+          pip install -r requirements-ci.txt
 
       - name: Lint with flake8
         working-directory: backend
