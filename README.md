@@ -6,7 +6,6 @@
 ![Python](https://img.shields.io/badge/Python-3.9+-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-green)
 ![React](https://img.shields.io/badge/React-18-blue)
-![License](https://img.shields.io/badge/License-MIT-yellow)
 
 **An AI-powered full-stack platform for real-time banking news analysis, deal intelligence, and market insights**
 
@@ -748,10 +747,6 @@ Contributions are welcome! Please follow these steps:
 - Keep commits atomic and well-described
 
 ---
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
