@@ -24,7 +24,6 @@ _current_run = {
 
 async def _run_collection(days_back: int):
     """Execute the data collection pipeline as a background task."""
-    global _current_run
     _current_run["running"] = True
     _current_run["started_at"] = datetime.utcnow().isoformat()
     _current_run["progress"] = "Initializing collector…"

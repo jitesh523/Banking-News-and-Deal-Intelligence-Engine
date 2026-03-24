@@ -20,9 +20,6 @@ from app.api import summary as summary_api
 from app.api import analyze as analyze_api
 from app.api import tags as tags_api
 from app.api import compare as compare_api
-from app.api import analytics as analytics_api
-from app.api import companies as companies_api
-from app.api import alerts as alerts_api
 from app.services.market_summary import MarketSummaryService
 from app.services.nlp_pipeline import NLPPipeline
 from app.core.error_handler import register_error_handlers
@@ -53,9 +50,9 @@ async def lifespan(app: FastAPI):
     analytics_engine = AnalyticsEngine()
     
     # Set analytics engine in API modules
-    analytics_api.set_analytics_engine(analytics_engine)
-    companies_api.set_analytics_engine(analytics_engine)
-    alerts_api.set_analytics_engine(analytics_engine)
+    analytics.set_analytics_engine(analytics_engine)
+    companies.set_analytics_engine(analytics_engine)
+    alerts.set_analytics_engine(analytics_engine)
     
     # Set analytics engine for export module
     export.set_analytics_engine(analytics_engine)
