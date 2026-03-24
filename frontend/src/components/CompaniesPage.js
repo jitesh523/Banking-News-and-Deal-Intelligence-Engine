@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
     Container,
     Typography,
@@ -28,11 +28,7 @@ const CompaniesPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [sortBy, setSortBy] = useState('mentions');
 
-    useEffect(() => {
-        loadCompanies();
-    }, [sortBy]);
-
-    const loadCompanies = async () => {
+    const loadCompanies = useCallback(async () => {
         try {
             setLoading(true);
             const response = await companiesAPI.getCompanies(100, sortBy);
@@ -42,7 +38,11 @@ const CompaniesPage = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [sortBy]);
+
+    useEffect(() => {
+        loadCompanies();
+    }, [loadCompanies]);
 
     const filtered = companies.filter((c) =>
         c.company?.toLowerCase().includes(searchTerm.toLowerCase())

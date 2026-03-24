@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
     Container,
     Typography,
@@ -35,11 +35,7 @@ const AlertsPage = () => {
     const [priorityFilter, setPriorityFilter] = useState(null);
     const [summary, setSummary] = useState(null);
 
-    useEffect(() => {
-        loadAlerts();
-    }, [priorityFilter]);
-
-    const loadAlerts = async () => {
+    const loadAlerts = useCallback(async () => {
         try {
             setLoading(true);
             const [alertsRes, summaryRes] = await Promise.all([
@@ -53,7 +49,11 @@ const AlertsPage = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [priorityFilter]);
+
+    useEffect(() => {
+        loadAlerts();
+    }, [loadAlerts]);
 
     return (
         <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
