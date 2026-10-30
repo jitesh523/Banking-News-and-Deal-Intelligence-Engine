@@ -266,12 +266,13 @@ class TrendAnalyzer:
         start_date: Optional[datetime],
         end_date: Optional[datetime]
     ) -> Dict[str, List]:
-        """Filter timeline by date range."""
+        """Filter by date range and return events in chronological order."""
+        ordered_timeline = dict(sorted(timeline.items()))
         if not start_date and not end_date:
-            return timeline
+            return ordered_timeline
         
         filtered = {}
-        for date_key, data in timeline.items():
+        for date_key, data in ordered_timeline.items():
             date = datetime.strptime(date_key, '%Y-%m-%d')
             
             if start_date and date < start_date:
